@@ -74,7 +74,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++17"
+					"fragment" : "-std=gnu++17"
 				},
 				{
 					"backtrace" : 2,
@@ -85,7 +85,7 @@
 			[
 				{
 					"backtrace" : 6,
-					"path" : "/home/nunziato-damino/Documents/Github/opencv_tutorial/include"
+					"path" : "/home/nunziato-damino/Documents/Github/pixel_sorting/include"
 				},
 				{
 					"backtrace" : 7,
@@ -115,15 +115,11 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-g",
-				"role" : "flags"
-			},
-			{
 				"fragment" : "",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/usr/local/lib:/usr/lib/gcc/x86_64-linux-gnu/13",
+				"fragment" : "-Wl,-rpath,/usr/local/lib",
 				"role" : "libraries"
 			},
 			{
@@ -203,7 +199,7 @@
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so",
+				"fragment" : "/usr/lib/gcc/x86_64-linux-gnu/14/libgomp.so",
 				"role" : "libraries"
 			},
 			{

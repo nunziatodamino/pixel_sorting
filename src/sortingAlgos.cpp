@@ -51,6 +51,7 @@ void sortBrightness(std::vector<cv::Vec3b>& pixels)
                 return (a[0] + a[1] + a[2]) < (b[0] + b[1] + b[2]);
             });
 }
+
 void sortByColumnCPU(cv::Mat& img)
 {
   #pragma omp parallel for
@@ -69,4 +70,32 @@ void sortByColumnCPU(cv::Mat& img)
       img.at<cv::Vec3b>(i, j) = column[i];
     }
   }  
+}
+
+void randomSortCPU(cv::Mat& img, float relEntropy)
+{
+  cv::RNG rng;
+  
+  int imgArea = img.cols * img.rows;
+  int entropy = static_cast<int>(imgArea * relEntropy);
+  
+  std::vector<cv::Vec3b> randPixels;
+  std::vector<cv::Point> randPos;
+  
+  for (int i = 0; i < entropy; ++i)
+  {
+    int row = rng.uniform(0, img.rows);
+    int col = rng.uniform(0, img.cols);
+    randPos.push_back(cv::Point(col,row));
+    randPixels.push_back(img.at<cv::Vec3b>(row, col));
+  }
+  
+  sortBrightness(randPixels);
+  
+  #pragma omp parallel for
+  for (int i = 0; i < entropy; ++i)
+  {
+    img.at<cv::Vec3b>(randPos[i].y, randPos[i].x) = randPixels[i];
+  }
+
 }

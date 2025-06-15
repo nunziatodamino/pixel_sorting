@@ -39,11 +39,11 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel ..."
 				}
 			],
 			"type" : "STRING",
-			"value" : "Debug"
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_CACHEFILE_DIR",
@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/nunziato-damino/Documents/Github/opencv_tutorial/build"
+			"value" : "/home/nunziato-damino/Documents/Github/pixel_sorting/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -283,11 +283,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "C compiler"
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-13"
+			"value" : "/usr/bin/cc"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -303,7 +303,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ar-13"
+			"value" : "/usr/bin/gcc-ar-14"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_RANLIB",
@@ -319,7 +319,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/bin/gcc-ranlib-13"
+			"value" : "/usr/bin/gcc-ranlib-14"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS",
@@ -519,11 +519,11 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "Enable/Disable output of compile commands during generation."
 				}
 			],
 			"type" : "BOOL",
-			"value" : "TRUE"
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_EXTRA_GENERATOR",
@@ -547,7 +547,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/nunziato-damino/Documents/Github/opencv_tutorial/build/CMakeFiles/pkgRedirects"
+			"value" : "/home/nunziato-damino/Documents/Github/pixel_sorting/build/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -607,7 +607,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/nunziato-damino/Documents/Github/opencv_tutorial"
+			"value" : "/home/nunziato-damino/Documents/Github/pixel_sorting"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1159,7 +1159,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/nunziato-damino/Documents/Github/opencv_tutorial/build"
+			"value" : "/home/nunziato-damino/Documents/Github/pixel_sorting/build"
 		},
 		{
 			"name" : "DisplayImage_IS_TOP_LEVEL",
@@ -1183,7 +1183,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/nunziato-damino/Documents/Github/opencv_tutorial"
+			"value" : "/home/nunziato-damino/Documents/Github/pixel_sorting"
 		},
 		{
 			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_OpenCV",
@@ -1219,7 +1219,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]"
+			"value" : "[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/14/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]"
 		},
 		{
 			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX",
@@ -1231,7 +1231,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]"
+			"value" : "[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/14/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.a][v4.5()]"
 		},
 		{
 			"name" : "OpenCV_DIR",
@@ -1395,7 +1395,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so"
+			"value" : "/usr/lib/gcc/x86_64-linux-gnu/14/libgomp.so"
 		},
 		{
 			"name" : "OpenMP_pthread_LIBRARY",
