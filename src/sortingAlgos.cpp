@@ -56,6 +56,26 @@ void sortByColumnCPU(cv::Mat& img)
   }  
 }
 
+void sortByRowCPU(cv::Mat& img)
+{
+  #pragma omp parallel for
+  for(int i = 0; i<img.rows; ++i)
+  {    
+    std::vector<cv::Vec3b> row;
+    for (int j = 0; j< img.cols; ++j)
+    {
+      row.push_back(img.at<cv::Vec3b>(i, j));
+    }
+    
+    sortBrightness(row);
+
+    for (int j = 0; j< img.cols; ++j)
+    {
+      img.at<cv::Vec3b>(i, j) = row[j];
+    }
+  }  
+}
+
 void randomSortCPU(cv::Mat& img, float relEntropy)
 {
   cv::RNG rng;

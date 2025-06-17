@@ -9,6 +9,8 @@ int main(int argc, char** argv )
   std::string input_file;
   std::string output_file;
   bool use_random_sort = false;
+  bool use_vertical_sort = false;
+  bool use_horizontal_sort = false;
   bool write = false;
   
   app.add_option("-i,--input", input_file, "Input image file")
@@ -17,6 +19,8 @@ int main(int argc, char** argv )
   app.add_option("-o,--output", output_file, "Output image file")
         ->required();
   app.add_flag("-r,--random", use_random_sort, "Use random sort");
+  app.add_flag("-v,--vertical", use_vertical_sort, "Use vertical sort");
+  app.add_flag("-x,--horizontal", use_horizontal_sort, "Use horizontal sort");
   app.add_flag("-w,--write", write, "Write result to output file");
 
   CLI11_PARSE(app, argc, argv);
@@ -28,6 +32,8 @@ int main(int argc, char** argv )
     return 1;
   }
   if (use_random_sort){randomSortCPU(img, 0.85f);}
+  if (use_vertical_sort){sortByColumnCPU(img);}
+  if (use_horizontal_sort){sortByRowCPU(img);}
   if (write)
   {
     if (output_file.empty())

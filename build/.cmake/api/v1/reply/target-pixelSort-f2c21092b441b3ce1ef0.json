@@ -119,7 +119,7 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/usr/local/lib",
+				"fragment" : "-Wl,-rpath,/usr/local/lib:/usr/lib/gcc/x86_64-linux-gnu/13",
 				"role" : "libraries"
 			},
 			{
@@ -199,7 +199,7 @@
 			},
 			{
 				"backtrace" : 5,
-				"fragment" : "/usr/lib/gcc/x86_64-linux-gnu/14/libgomp.so",
+				"fragment" : "/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so",
 				"role" : "libraries"
 			},
 			{
