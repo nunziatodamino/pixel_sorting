@@ -5,6 +5,7 @@ project( DisplayImage )
 
 include_directories(include)
 
+
 find_package(OpenMP REQUIRED)
 find_package( OpenCV REQUIRED )
 
