@@ -7,11 +7,12 @@ include_directories(include)
 
 
 find_package(OpenMP REQUIRED)
-find_package( OpenCV REQUIRED )
+find_package(OpenCV REQUIRED)
 
 set(SOURCES
     src/main.cpp
     src/sortingAlgos.cpp
+    src/cliConfig.cpp
 )
 
 include_directories( ${OpenCV_INCLUDE_DIRS} )

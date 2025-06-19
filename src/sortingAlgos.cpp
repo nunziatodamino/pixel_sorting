@@ -80,6 +80,15 @@ void sortByColumnCPU(cv::Mat& img)
   }  
 }
 
+void blueChannel(cv::Mat& img)
+{
+  std::vector<cv::Mat> channels;
+  cv::split(img, channels);
+  channels[1].setTo(0);
+  channels[2].setTo(0);
+  cv::merge(channels, img);
+}
+
 void sortByColumnThresholdCPU(cv::Mat& img, float threshold)
 {
   #pragma omp parallel for
