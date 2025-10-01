@@ -11,9 +11,18 @@ struct Config
     RandomSort,
   };
 
+  enum class ColorSpace
+  {
+    NoTransformation, // BGR space
+    HSV,
+    LAB,
+    YCrCB,
+  };
+
   std::string input_file;
   std::string output_file;
   Mode mode;
+  ColorSpace colorSpace;
   int threshold = 0;
   float relEntropy = 0.0f;
   bool write = false;
@@ -47,12 +56,40 @@ void cliSetup (CLI::App& app, Config& config)
   app.add_option("-m, --method", config.mode, "Sorting method")
         ->required()
        ->transform(CLI::Transformer(mode_map, CLI::ignore_case));
+  
+  CLI::TransformPairs<Config::ColorSpace> color_map
+  {
+    {"HSV",  Config::ColorSpace::HSV},
+    {"LAB",  Config::ColorSpace::LAB},
+    {"YCrCb",Config::ColorSpace::YCrCB}
+  };
+  app.add_option("-c, --color", config.colorSpace, "Select color space")
+       ->transform(CLI::Transformer(color_map, CLI::ignore_case));
+
   app.add_option("-t,--treshold", config.threshold, "Use threshold on brightness with sort")
         ->expected(0, config.maxAbsBrightness)
         ->check(CLI::Range(0, config.maxAbsBrightness));
   app.add_option("-e,--entropy", config.relEntropy, "set relative entropy for the random sort")
         ->expected(0, 1);
   app.add_flag("-w,--write", config.write, "Write result to output file");
+}
+
+void transformImage(cv::Mat& img, Config& config)
+{
+  switch (config.colorSpace)
+  {
+  case Config::ColorSpace::HSV:
+    cv::cvtColor(img, img, cv::COLOR_BGR2HSV);
+    break;
+  case Config::ColorSpace::LAB:
+    cv::cvtColor(img, img, cv::COLOR_BGR2Lab);
+    break;
+  case Config::ColorSpace::YCrCB:
+    cv::cvtColor(img, img, cv::COLOR_BGR2YCrCb);
+    break;  
+  default: // does nothing as the image is already BGR
+    break;
+  }
 }
 
 void applyImageProcessing(cv::Mat& img, Config& config)
