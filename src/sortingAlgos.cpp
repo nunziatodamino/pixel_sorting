@@ -31,7 +31,7 @@ namespace pixSort
               });
   }
   
-  void brightnessWithThreshold(std::vector<cv::Vec3b>& pixels, float threshold)
+void brightnessWithThreshold(std::vector<cv::Vec3b>& pixels, float threshold)
 {
     std::sort(pixels.begin(), pixels.end(),
               [threshold](const cv::Vec3b& a, const cv::Vec3b& b)
@@ -89,9 +89,9 @@ void blueChannel(cv::Mat& img)
   cv::merge(channels, img);
 }
 
+
 void sortByColumnThresholdCPU(cv::Mat& img, float threshold)
 {
-  #pragma omp parallel for
   for(int j = 0; j<img.cols; ++j)
   {    
     std::vector<cv::Vec3b> column;
@@ -101,7 +101,8 @@ void sortByColumnThresholdCPU(cv::Mat& img, float threshold)
     }
     
     pixSort::brightnessWithThreshold(column, threshold);
-
+   
+    #pragma omp parallel for
     for (int i = 0; i< img.rows; ++i)
     {
       img.at<cv::Vec3b>(i, j) = column[i];
@@ -111,7 +112,6 @@ void sortByColumnThresholdCPU(cv::Mat& img, float threshold)
 
 void sortByRowThresholdCPU(cv::Mat& img, float threshold)
 {
-  #pragma omp parallel for
   for(int i = 0; i<img.rows; ++i)
   {    
     std::vector<cv::Vec3b> row;
@@ -121,7 +121,8 @@ void sortByRowThresholdCPU(cv::Mat& img, float threshold)
     }
     
     pixSort::brightnessWithThreshold(row, threshold);
-
+    
+    #pragma omp parallel for
     for (int j = 0; j< img.cols; ++j)
     {
       img.at<cv::Vec3b>(i, j) = row[j];

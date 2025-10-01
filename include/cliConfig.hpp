@@ -21,3 +21,4 @@ void cliSetup (CLI::App& app, Config& config);
 cv::Mat loadImage(const Config& config); 
 void applyImageProcessing(cv::Mat& img, Config& config);
 void displayImage(cv::Mat& img);
+

@@ -3,14 +3,19 @@
 
 struct Config
 {
+  enum class Mode
+  {
+    NoMethod,
+    Horizontal,
+    Vertical,
+    RandomSort,
+  };
+
   std::string input_file;
   std::string output_file;
-  bool use_random_sort = false;
-  bool use_vertical_sort = false;
-  bool use_blue_channel = false;
+  Mode mode;
   int threshold = 0;
   float relEntropy = 0.0f;
-  bool use_horizontal_sort = false;
   bool write = false;
   
   static constexpr int maxAbsBrightness{255+255+255};
@@ -32,36 +37,44 @@ void cliSetup (CLI::App& app, Config& config)
         ->check(CLI::ExistingFile);
   app.add_option("-o,--output", config.output_file, "Output image file")
         ->required();
+  
+  CLI::TransformPairs<Config::Mode> mode_map
+  {
+    {"horizontal", Config::Mode::Horizontal},
+    {"vertical",   Config::Mode::Vertical},
+    {"random",     Config::Mode::RandomSort}
+  };
+  app.add_option("-m, --method", config.mode, "Sorting method")
+        ->required()
+       ->transform(CLI::Transformer(mode_map, CLI::ignore_case));
   app.add_option("-t,--treshold", config.threshold, "Use threshold on brightness with sort")
         ->expected(0, config.maxAbsBrightness)
         ->check(CLI::Range(0, config.maxAbsBrightness));
   app.add_option("-e,--entropy", config.relEntropy, "set relative entropy for the random sort")
         ->expected(0, 1);
- 
-  app.add_flag("-r,--random", config.use_random_sort, "Use random sort");
-  app.add_flag("-v,--vertical", config.use_vertical_sort, "Use vertical sort");
-  app.add_flag("-x,--horizontal", config.use_horizontal_sort, "Use horizontal sort");
-  app.add_flag("-b,--blue", config.use_blue_channel, "Output just the blue channel");
   app.add_flag("-w,--write", config.write, "Write result to output file");
 }
 
 void applyImageProcessing(cv::Mat& img, Config& config)
 {
-    if (config.use_blue_channel){blueChannel(img);}
-  if (config.use_random_sort)
-    {
-      if (config.relEntropy >= 0){randomSortCPU(img, config.relEntropy);}
-    }
-  if (config.use_vertical_sort)
-    {
-      if (config.threshold > 0){sortByColumnThresholdCPU(img, config.threshold);}
-      else{sortByColumnThresholdCPU(img, 0);}
-    }
-  if (config.use_horizontal_sort)
-    {
-      if (config.threshold >0) {sortByRowThresholdCPU(img, config.threshold);}
-      else {sortByRowThresholdCPU(img, 0);}
-    }
+  switch (config.mode)
+  {
+  case Config::Mode::Horizontal:
+    if (config.threshold >0) {sortByRowThresholdCPU(img, config.threshold);}
+    else {sortByRowThresholdCPU(img, 0);}
+    break;
+  case Config::Mode::Vertical:
+    if (config.threshold >0) {sortByColumnThresholdCPU(img, config.threshold);}
+    else {sortByColumnThresholdCPU(img, 0);}
+    break;
+  case Config::Mode::RandomSort:
+       if (config.relEntropy >= 0){randomSortCPU(img, config.relEntropy);}
+       break;
+  default: 
+       throw std::runtime_error("Sorting method not specified.\n");
+       break;
+  }
+
   if (config.write)
   {
     if (config.output_file.empty())
@@ -70,4 +83,11 @@ void applyImageProcessing(cv::Mat& img, Config& config)
     }
     cv::imwrite(config.output_file, img);
   }
+}
+
+void displayImage(cv::Mat& img)
+{
+  cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE );
+  cv::imshow("Display Image", img);
+  cv::waitKey(0);
 }
