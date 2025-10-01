@@ -26,6 +26,7 @@ struct Config
   int threshold = 0;
   float relEntropy = 0.0f;
   bool write = false;
+  bool transform = false;
   
   static constexpr int maxAbsBrightness{255+255+255};
 };
@@ -72,6 +73,7 @@ void cliSetup (CLI::App& app, Config& config)
   app.add_option("-e,--entropy", config.relEntropy, "set relative entropy for the random sort")
         ->expected(0, 1);
   app.add_flag("-w,--write", config.write, "Write result to output file");
+  app.add_flag("-x,--transform", config.transform, "Stay in the transformation space");
 }
 
 void transformImage(cv::Mat& img, Config& config)
@@ -92,8 +94,28 @@ void transformImage(cv::Mat& img, Config& config)
   }
 }
 
+void inverseTransformImage(cv::Mat& img, Config& config)
+{
+  switch (config.colorSpace)
+  {
+  case Config::ColorSpace::HSV:
+    cv::cvtColor(img, img, cv::COLOR_HSV2BGR);
+    break;
+  case Config::ColorSpace::LAB:
+    cv::cvtColor(img, img, cv::COLOR_Lab2BGR);
+    break;
+  case Config::ColorSpace::YCrCB:
+    cv::cvtColor(img, img, cv::COLOR_YCrCb2BGR);
+    break;  
+  default: // does nothing as the image is already BGR
+    break;
+  }
+}
+
 void applyImageProcessing(cv::Mat& img, Config& config)
 {
+  transformImage(img, config);
+
   switch (config.mode)
   {
   case Config::Mode::Horizontal:
@@ -119,6 +141,11 @@ void applyImageProcessing(cv::Mat& img, Config& config)
       throw std::runtime_error("Output file not specified.\n");
     }
     cv::imwrite(config.output_file, img);
+  }
+
+  if (!config.transform)
+  {
+    inverseTransformImage(img, config);
   }
 }
 

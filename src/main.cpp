@@ -10,7 +10,6 @@ int main(int argc, char** argv )
   
   // Image processing
   cv::Mat img = loadImage(configData);
-  transformImage(img, configData);
   applyImageProcessing(img, configData);
   displayImage(img);
 }
